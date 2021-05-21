@@ -3,13 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RailwayTicketBox", "RailwayTicketBox.csproj", "{378F2C07-E999-4409-9BA0-89832D164778}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RailwayTicketBox", "RailwayTicketBox.csproj", "{378F2C07-E999-4409-9BA0-89832D164778}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "..\DAL\DAL.csproj", "{AAC3DBE0-A357-4026-870D-C39E68FFB800}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "..\PL\PL.csproj", "{435A9455-F9BD-423D-BEF7-3BDA11FAACDE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C2F5D4EE-5419-418E-B82B-470FA3552298} = {C2F5D4EE-5419-418E-B82B-470FA3552298}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "..\Tests\Tests.csproj", "{AD1F09D9-E121-412B-A76E-B71C1EB943E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "..\Tests\Tests.csproj", "{AD1F09D9-E121-412B-A76E-B71C1EB943E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "..\BLL\BLL.csproj", "{C2F5D4EE-5419-418E-B82B-470FA3552298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +38,10 @@ Global
 		{AD1F09D9-E121-412B-A76E-B71C1EB943E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD1F09D9-E121-412B-A76E-B71C1EB943E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD1F09D9-E121-412B-A76E-B71C1EB943E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2F5D4EE-5419-418E-B82B-470FA3552298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F5D4EE-5419-418E-B82B-470FA3552298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F5D4EE-5419-418E-B82B-470FA3552298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F5D4EE-5419-418E-B82B-470FA3552298}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

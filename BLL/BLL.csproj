@@ -42,12 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exception\BillNameInvalidException.cs" />
-    <Compile Include="Exception\BillsNotInitializedException.cs" />
-    <Compile Include="Exception\CategoryNameInvalid.cs" />
-    <Compile Include="Exception\InsufficientFundsException.cs" />
-    <Compile Include="Exception\MoneyEventNameInvalidException.cs" />
-    <Compile Include="Exception\TooManyFalseAttemptsException.cs" />
+    <Compile Include="Exception\InvalidInputException.cs" />
     <Compile Include="GetInputService\GetInputService.cs" />
     <Compile Include="GetInputService\IGetInputService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

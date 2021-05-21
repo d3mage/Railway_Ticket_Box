@@ -1,4 +1,4 @@
-﻿using System;
+﻿using PL; 
 
 namespace RailwayTicketBox
 {
@@ -6,7 +6,7 @@ namespace RailwayTicketBox
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Menu menu = new Menu(); 
         }
     }
 }

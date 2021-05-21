@@ -2,6 +2,6 @@
 {
     public interface IGetInputService
     {
-        public static string GetVerifiedInput(string pattern);
+        public string GetVerifiedInput(string pattern);
     }
 }

@@ -2,14 +2,14 @@
 using DAL.Provider;
 using Moq;
 using System;
-using System.Collections.Generic;
+using Tests.BLL.Tests;
 using Xunit;
 
 namespace Tests.DAL.Tests
 {
     public class context_Tests
     {
-        string conn = testData.GetConnectionString();
+        string conn = testData.GetIntConnectionString();
 
         [Fact]
         public void GetData_AddSuccessfully()

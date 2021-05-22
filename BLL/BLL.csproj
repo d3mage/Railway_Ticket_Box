@@ -42,10 +42,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddService\AddService.cs" />
+    <Compile Include="AddService\IAddItemService.cs" />
+    <Compile Include="ConversionService\ConversionService.cs" />
+    <Compile Include="Entities\Booking.cs" />
+    <Compile Include="Entities\Car.cs" />
+    <Compile Include="Entities\Train.cs" />
     <Compile Include="Exception\InvalidInputException.cs" />
     <Compile Include="GetInputService\GetInputService.cs" />
     <Compile Include="GetInputService\IGetInputService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadWriteService\IReadWriteService.cs" />
+    <Compile Include="ReadWriteService\ReadWriteService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{aac3dbe0-a357-4026-870d-c39e68ffb800}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

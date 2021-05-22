@@ -6,13 +6,17 @@ namespace DAL.Entities
     public class TrainDAL
     {
         public ulong trainNumber;
+        public string dispatch;
+        public string destination;
         public DateTime departure;
 
         public TrainDAL() { }
 
-        public TrainDAL(ulong train, DateTime departure)
+        public TrainDAL(ulong train, string dispatch, string destination, DateTime departure)
         {
             trainNumber = train;
+            this.dispatch = dispatch;
+            this.destination = destination;
             this.departure = departure; 
         }
 

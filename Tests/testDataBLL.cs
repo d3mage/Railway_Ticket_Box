@@ -13,22 +13,22 @@ namespace Tests
 
         public static List<int> GetIntList()
         {
-            List<int> toReturn = new List<int>() { 1, 2, 3 };
+            List<int> toReturn = new() { 1, 2, 3 };
             return toReturn;
         }
 
         public static List<Train> GetTrainList()
         {
-            Train train1 = new(202019, DateTime.Today);
-            Train train2 = new(2021019, DateTime.Today);
-            List<Train> toReturn = new List<Train>() { train1, train2 };
+            Train train1 = new(202019, "Kyiv", "Odesa", DateTime.Today);
+            Train train2 = new(2021019, "Kyiv", "Kharkiv", DateTime.Today);
+            List<Train> toReturn = new() { train1, train2 };
             return toReturn;
         }
         public static List<TrainDAL> GetTrainDALList()
         {
-            TrainDAL train1 = new(202019, DateTime.Today);
-            TrainDAL train2 = new(2021019, DateTime.Today);
-            List<TrainDAL> toReturn = new List<TrainDAL>() { train1, train2 };
+            TrainDAL train1 = new(202019, "Kyiv", "Odesa", DateTime.Today);
+            TrainDAL train2 = new(2021019, "Kyiv", "Kharkiv", DateTime.Today);
+            List<TrainDAL> toReturn = new() { train1, train2 };
             return toReturn;
         }
     }

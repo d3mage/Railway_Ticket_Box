@@ -44,9 +44,9 @@
   <ItemGroup>
     <Compile Include="Context\DataContext.cs" />
     <Compile Include="Context\IDataContext.cs" />
-    <Compile Include="Entities\Booking.cs" />
-    <Compile Include="Entities\Car.cs" />
-    <Compile Include="Entities\Train.cs" />
+    <Compile Include="Entities\BookingDAL.cs" />
+    <Compile Include="Entities\CarDAL.cs" />
+    <Compile Include="Entities\TrainDAL.cs" />
     <Compile Include="Exception\EmptyListException.cs" />
     <Compile Include="Exception\ProviderException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

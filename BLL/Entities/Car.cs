@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace DAL.Entities
+namespace BLL.Entities
 {
-    [Serializable]
     public class Car
     {
         public ulong trainNumber { get; }
+        public ushort carNumber { get; }
         public List<bool> sitsVacancy { get; set; }
-
-        public Car() { }
 
         public Car(ulong train)
         {

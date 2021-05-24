@@ -17,7 +17,7 @@ namespace BLL
             {
                 ConversionService.ConversionService<Y, T>.conversion(_dataContext.GetData(), readData);
             }
-            catch (EmptyListException e)
+            catch (EmptyListException)
             {
                 readData = new List<T>();
             }

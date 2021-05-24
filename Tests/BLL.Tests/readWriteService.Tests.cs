@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Xunit;
 using BLL.Entities;
 using DAL.Entities;
-using Tests.DAL.Tests;
 
 namespace Tests.BLL.Tests
 {
@@ -29,6 +28,19 @@ namespace Tests.BLL.Tests
                 Assert.Equal(expected[i].departure, actual[i].departure);
                 Assert.Equal(expected[i].departure, actual[i].departure);
             }
+        }
+        [Fact]
+        public void ReadData_CatchException()  
+        {
+            var mock = new Mock<IDataContext<TrainDAL>>();
+            mock.Setup(x => x.GetData()).Throws<EmptyListException>();
+            var readWriteService = new ReadWriteService<Train, TrainDAL>(mock.Object);
+
+            List<Train> expected = new List<Train>(); 
+            var actual = readWriteService.ReadData();
+
+            Assert.True(actual != null);
+            Assert.Equal(expected.Count, actual.Count);
         }
 
         //[Fact]

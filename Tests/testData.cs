@@ -24,6 +24,12 @@ namespace Tests
             List<Train> toReturn = new() { train1, train2 };
             return toReturn;
         }
+
+        public static Train GetTrain()
+        {
+            return new Train(129382, "Kyiv", "Mykolaiv", DateTime.Today);
+        }
+
         public static List<TrainDAL> GetTrainDALList()
         {
             TrainDAL train1 = new(202019, "Kyiv", "Odesa", DateTime.Today);

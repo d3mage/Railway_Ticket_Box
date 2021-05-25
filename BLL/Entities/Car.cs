@@ -6,11 +6,13 @@ namespace BLL.Entities
     {
         public ulong trainNumber { get; }
         public ushort carNumber { get; }
-        public List<bool> sitsVacancy { get; set; }
+        public bool[] sitsTaken { get; set; }
 
-        public Car(ulong train)
+        public Car(ulong train, ushort car)
         {
-            trainNumber = train; 
+            trainNumber = train;
+            carNumber = car;
+            sitsTaken = new bool[30];
         }
     }
 }

@@ -8,13 +8,14 @@ namespace DAL.Entities
     {
         public ulong trainNumber;
         public ushort carNumber;
-        public List<bool> sitsVacancy;
+        public bool[] sitsTaken;
 
         public CarDAL() { }
 
-        public CarDAL(ulong train)
+        public CarDAL(ulong train, ushort car)
         {
-            trainNumber = train; 
+            trainNumber = train;
+            carNumber = car; 
         }
     }
 }

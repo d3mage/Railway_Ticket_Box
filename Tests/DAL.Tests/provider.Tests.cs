@@ -11,8 +11,10 @@ namespace Tests.DAL.Tests
     {
         XmlProvider<int> provider = new XmlProvider<int>();
         XmlProvider<TrainDAL> providerTrain = new XmlProvider<TrainDAL>();
+        XmlProvider<CarDAL> providerCar = new XmlProvider<CarDAL>();
         string conn = testData.GetIntConnectionString();
         string connTrain = testData.GetTrainConnectionString(); 
+        string connCar= testData.GetCarConnectionString(); 
 
         [Fact]
         public void XmlProvider_Write_Read_Successfully()
@@ -49,6 +51,26 @@ namespace Tests.DAL.Tests
                 Assert.Equal(expected[i].departure, actual[i].departure);
             }
         }
+
+        [Fact]
+        public void XmlProvider_Write_Read_Car_Successfully()
+        {
+            List<CarDAL> expected = testData.GetCarDALList();
+
+            providerCar.Write(expected, connCar);
+
+            var actual = providerCar.Read(connCar);
+
+            Assert.True(actual != null);
+            Assert.Equal(expected.Count, actual.Count);
+
+            for (int i = 0; i < expected.Count; i++)
+            {
+                Assert.Equal(expected[i].trainNumber, actual[i].trainNumber);
+                Assert.Equal(expected[i].carNumber, actual[i].carNumber);
+            }
+        }
+
         [Fact]
         public void XmlProvider_CatchException_Read()
         {

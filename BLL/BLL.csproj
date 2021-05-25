@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookingService\BookingService.cs" />
     <Compile Include="CarService\CarService.cs" />
     <Compile Include="CarService\ICarService.cs" />
     <Compile Include="ConversionService\ConversionService.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Entities\Train.cs" />
     <Compile Include="Exception\CarNotEmptyException.cs" />
     <Compile Include="Exception\InvalidInputException.cs" />
+    <Compile Include="Exception\TrainNumberException.cs" />
     <Compile Include="GetInputService\GetInputService.cs" />
     <Compile Include="GetInputService\IGetInputService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

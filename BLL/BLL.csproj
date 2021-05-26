@@ -43,13 +43,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookingService\BookingService.cs" />
+    <Compile Include="BookingService\IBookingService.cs" />
     <Compile Include="CarService\CarService.cs" />
     <Compile Include="CarService\ICarService.cs" />
     <Compile Include="ConversionService\ConversionService.cs" />
     <Compile Include="Entities\Booking.cs" />
     <Compile Include="Entities\Car.cs" />
     <Compile Include="Entities\Train.cs" />
+    <Compile Include="Exception\BookingNumberException.cs" />
     <Compile Include="Exception\CarNotEmptyException.cs" />
+    <Compile Include="Exception\CarNumberException.cs" />
     <Compile Include="Exception\InvalidInputException.cs" />
     <Compile Include="Exception\TrainNumberException.cs" />
     <Compile Include="GetInputService\GetInputService.cs" />

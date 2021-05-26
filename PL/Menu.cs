@@ -1,6 +1,7 @@
 ﻿using BLL;
 using BLL.CarService;
 using BLL.TrainService;
+using BLL.BookingService;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,16 +11,18 @@ namespace PL
     public class Menu
     {
         readonly ITrainService trainService;    
-        readonly ICarService carService;    
+        readonly ICarService carService;
+        readonly IBookingService bookingService; 
 
         private Dictionary<string, Dictionary<string, Action<string>>> menuFunctions;
         private Dictionary<string, Action<string>> currentFunctions;
         private Dictionary<string, string> entries;
 
-        public Menu(ITrainService trainService, ICarService carService)
+        public Menu(ITrainService trainService, ICarService carService, IBookingService bookingService)
         {
             this.trainService = trainService;
             this.carService = carService;
+            this.bookingService = bookingService;
             menuFunctions = GetMenuFunctions();
             entries = GetMenuEntries();
             menu("initial");
@@ -94,6 +97,7 @@ namespace PL
                 trainService.trainExists(train, true); 
                 Console.WriteLine("Enter car number (2-4 digits): " );
                 ushort car = Convert.ToUInt16(GetInputService.GetVerifiedInput(@"\d{2,4}"));
+                carService.carExists(train, car, false);
                 carService.add(train, car);
             }
             catch (InvalidInputException)
@@ -109,15 +113,16 @@ namespace PL
         {
             try
             {
-                Console.WriteLine("Enter number of train (6-20 digits): " );
-                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
-                Console.WriteLine("Enter train dispatch station: " );
-                string dispatch = GetInputService.GetVerifiedInput(@"[A-Za-z]{3,20}");
-                Console.WriteLine("Enter train destination station: " );
-                string destination = GetInputService.GetVerifiedInput(@"[A-Za-z]{3,20}");
-                Console.WriteLine("Enter departure date (dd/MM/yyyy): ");
-                DateTime departure = DateTime.ParseExact(GetInputService.GetVerifiedInput(@"\d\d?/\d\d?/\d{4}"), "d/M/yyyy", CultureInfo.InvariantCulture);
-                trainService.add(train, dispatch, destination, departure); 
+                Console.WriteLine("Enter number of exitsting train (6-18 digits): ");
+                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,18}"));
+                trainService.trainExists(train, true);
+                Console.WriteLine("Enter number of existing car (2-4 digits): ");
+                ushort car = Convert.ToUInt16(GetInputService.GetVerifiedInput(@"\d{2,4}"));
+                carService.carExists(train, car, true);
+                Console.WriteLine("Enter number of sit you want to book (1-30): ");
+                byte sit = Convert.ToByte(GetInputService.GetVerifiedInput(@"^(?(?=[0-2])\d?\d|30)/"));
+                bookingService.bookingExists(train, car, sit, false);
+                bookingService.add(train, car, sit);
             }
             catch (InvalidInputException)
             {
@@ -131,6 +136,11 @@ namespace PL
             {
                 deleteTrain();
             }
+            else if (entity.Equals("car"))
+            {
+                deleteCar();
+            }
+            else deleteBooking(); 
         }
 
         public void deleteTrain()
@@ -140,20 +150,65 @@ namespace PL
             ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
             trainService.delete(train);
         }
+        public void deleteCar()
+        {
+            try
+            {
+                trainService.getAllTrains();
+                Console.WriteLine("Select train to delete car from: ");
+                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
+                trainService.trainExists(train, true);
+                carService.getTrainCars(train);
+                Console.WriteLine("Select car to delete: ");
+                ushort car = Convert.ToUInt16(GetInputService.GetVerifiedInput(@"\d{2,4}"));
+                carService.carExists(train, car, true);
+                bool isCarEmpty = carService.isCarEmpty(train, car);
+                carService.delete(train, car, isCarEmpty);
+            }
+            catch (Exception e) when (e is TrainNumberException || e is CarNumberException || e is CarNotEmptyException)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        public void deleteBooking()
+        {
+            try
+            {
+                trainService.getAllTrains();
+                Console.WriteLine("Select train to delete booking from: ");
+                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
+                trainService.trainExists(train, true);
+                carService.getTrainCars(train);
+                Console.WriteLine("Select car to delete booking from: ");
+                ushort car = Convert.ToUInt16(GetInputService.GetVerifiedInput(@"\d{2,4}"));
+                carService.carExists(train, car, true);
+                Console.WriteLine("Enter number of sit you want to delete (1-30): ");
+                byte sit = Convert.ToByte(GetInputService.GetVerifiedInput(@"^(?(?=[0-2])\d?\d|30)/"));
+                bookingService.bookingExists(train, car, sit, true);
+                bookingService.delete(train, car, sit);
+
+            }
+            catch (Exception e) when (e is TrainNumberException || e is CarNumberException || e is CarNotEmptyException)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
 
         public void view(string entity)
         {
-            if(entity.Equals("all"))
+            switch(entity)
             {
-                viewAllTrains(); 
-            }
-            else if(entity.Equals("single"))
-            {
-
-            }
-            else if (entity.Equals("percentage"))
-            {
-
+                case "all":
+                    viewAllTrains();
+                    break;
+                case "single":
+                    break;
+                case "percentage":
+                    break;
+                case "vacancy":
+                    break;
+                case "booking":
+                    break;
             }
         }
 

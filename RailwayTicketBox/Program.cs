@@ -5,7 +5,8 @@ using BLL.CarService;
 using DAL.Entities;
 using BLL.Entities;
 using DAL; 
-using DAL.Provider; 
+using DAL.Provider;
+using BLL.BookingService;
 
 namespace RailwayTicketBox
 {
@@ -22,9 +23,13 @@ namespace RailwayTicketBox
             DataContext<CarDAL> carContext = new(carXML, "car.xml");
             ReadWriteService<Car, CarDAL> carRW = new(carContext);
             CarService carService = new CarService(carRW);
+            
+            XmlProvider<BookingDAL> bookingXML = new();
+            DataContext<BookingDAL> bookingContext = new(bookingXML, "booking.xml");
+            ReadWriteService<Booking, BookingDAL> bookingRW = new(bookingContext);
+            BookingService bookingService = new BookingService(bookingRW);
 
-
-            Menu menu = new Menu(trainService, carService); 
+            Menu menu = new Menu(trainService, carService, bookingService); 
         }
     }
 }

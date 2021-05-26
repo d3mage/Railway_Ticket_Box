@@ -45,5 +45,53 @@ namespace Tests.BLL.Tests
 
             Assert.Null(data.Find(x => x.trainNumber == 202019));
         }
+
+        [Fact]
+        public void trainExists_Success()
+        {
+            List<Train> data = testData.GetTrainList();
+
+            var mock = new Mock<IReadWriteService<Train, TrainDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            TrainService service = new(mock.Object);
+
+            var exception = Record.Exception(() => service.trainExists(202019, true));
+
+            Assert.Null(exception);
+        }
+        
+        [Fact]
+        public void trainExists_ThrowsError()
+        {
+            List<Train> data = testData.GetTrainList();
+
+            var mock = new Mock<IReadWriteService<Train, TrainDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            TrainService service = new(mock.Object);
+
+            Assert.Throws<TrainNumberException>(() => service.trainExists(12, true));
+        }
+
+        [Fact]
+        public void getAllTrains_Success()
+        {
+            List<Train> data = testData.GetTrainList();
+
+            var mock = new Mock<IReadWriteService<Train, TrainDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            TrainService service = new(mock.Object);
+
+            string expected1 = "202019";
+            string expected2 = "2021019";
+
+            string actual = service.getAllTrains();
+            Console.WriteLine(actual);
+            Assert.Contains(expected1, actual);
+            Assert.Contains(expected2, actual);
+        }
+
     }
 }

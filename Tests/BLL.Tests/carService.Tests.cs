@@ -57,6 +57,62 @@ namespace Tests.BLL.Tests
         }
 
         [Fact]
+        public void isCarEmpty_Empty()
+        {
+            List<Car> data = testData.GetCarList();
+
+            var mock = new Mock<IReadWriteService<Car, CarDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            CarService service = new(mock.Object);
+
+            bool actual = service.isCarEmpty(1039921, 12900);
+
+            Assert.True(actual);
+        }
+        [Fact]
+        public void isCarEmpty_NotEmpty()
+        {
+            List<Car> data = testData.GetCarList();
+
+            var mock = new Mock<IReadWriteService<Car, CarDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            CarService service = new(mock.Object);
+
+            service.sitChangeState(1039921, 12900, 1, true);
+            bool actual = service.isCarEmpty(1039921, 12900);
+
+            Assert.False(actual);
+        }
+        [Fact]
+        public void carExists_Success()
+        {
+            List<Car> data = testData.GetCarList();
+
+            var mock = new Mock<IReadWriteService<Car, CarDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            CarService service = new(mock.Object);
+
+            var exception = Record.Exception(() => service.carExists(1039921, 12900, true));
+
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void carExists_ThrowsError()
+        {
+            List<Car> data = testData.GetCarList();
+
+            var mock = new Mock<IReadWriteService<Car, CarDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            CarService service = new(mock.Object);
+
+            Assert.Throws<CarNumberException>(() => service.carExists(10, 12, true));
+        }
+        [Fact]
         public void sitChangeState_Sit_Occupied()
         {
             List<Car> data = testData.GetCarList();

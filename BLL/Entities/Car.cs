@@ -8,11 +8,11 @@ namespace BLL.Entities
         public ushort carNumber { get; }
         public bool[] sitsTaken { get; set; }
 
-        public Car(ulong train, ushort car)
+        public Car(ulong train, ushort car, bool[] sits = null)
         {
             trainNumber = train;
             carNumber = car;
-            sitsTaken = new bool[30];
+            sitsTaken = sits ?? new bool[30];
         }
     }
 }

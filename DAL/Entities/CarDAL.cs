@@ -12,10 +12,11 @@ namespace DAL.Entities
 
         public CarDAL() { }
 
-        public CarDAL(ulong train, ushort car)
+        public CarDAL(ulong train, ushort car, bool[] sits = null)
         {
             trainNumber = train;
-            carNumber = car; 
+            carNumber = car;
+            sitsTaken = sits ?? new bool[30];
         }
     }
 }

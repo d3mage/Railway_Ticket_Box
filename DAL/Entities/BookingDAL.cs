@@ -17,7 +17,14 @@ namespace DAL.Entities
             trainNumber = train;
             carNumber = car;
             sitNumber = sit;
-            reservationDate = DateTime.Now; 
+            reservationDate = DateTime.Now.Date; 
+        }
+        public BookingDAL(ulong train, ushort car, byte sit, DateTime date)
+        {
+            trainNumber = train;
+            carNumber = car;
+            sitNumber = sit;
+            reservationDate = date; 
         }
     }
 }

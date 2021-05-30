@@ -14,7 +14,20 @@ namespace BLL.Entities
             trainNumber = train;
             carNumber = car;
             sitNumber = sit;
-            reservationDate = DateTime.Now; 
+            reservationDate = DateTime.Now.Date; 
+        }
+
+        public Booking(ulong train, ushort car, byte sit, DateTime date)
+        {
+            trainNumber = train;
+            carNumber = car;
+            sitNumber = sit;
+            reservationDate = date;
+        }
+
+        public override string ToString()
+        {
+            return sitNumber + " " + reservationDate;
         }
     }
 }

@@ -66,14 +66,14 @@ namespace BLL.ConversionService
         {
             foreach(Booking booking in bookings)
             {
-                bookingsDAL.Add(new BookingDAL(booking.trainNumber, booking.carNumber, booking.sitNumber));
+                bookingsDAL.Add(new BookingDAL(booking.trainNumber, booking.carNumber, booking.sitNumber, booking.reservationDate));
             }
         }
         private static void  conversionDALToBooking(List<BookingDAL> bookingsDAL, List<Booking> bookings)
         {
             foreach(BookingDAL booking in bookingsDAL)
             {
-                bookings.Add(new Booking(booking.trainNumber, booking.carNumber, booking.sitNumber));
+                bookings.Add(new Booking(booking.trainNumber, booking.carNumber, booking.sitNumber, booking.reservationDate));
             }
         }
     }

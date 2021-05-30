@@ -27,7 +27,7 @@ namespace BLL.Entities
 
         public override string ToString()
         {
-            return sitNumber + " " + reservationDate;
+            return trainNumber + " " + carNumber + " " + sitNumber + " " + reservationDate;
         }
     }
 }

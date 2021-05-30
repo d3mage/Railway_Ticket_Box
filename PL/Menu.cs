@@ -145,20 +145,32 @@ namespace PL
 
         public void deleteTrain()
         {
-            trainService.getAllTrains();
-            Console.WriteLine("Select train to delete: ");
-            ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
-            trainService.delete(train);
+            try
+            {
+                Console.WriteLine(trainService.getAllTrains());
+                Console.WriteLine("Select train to delete: ");
+                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
+                trainService.delete(train);
+            }
+            catch (InvalidInputException)
+            {
+                Console.WriteLine("Invalid data entered.");
+            }
+            catch (TrainNumberException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
         public void deleteCar()
         {
             try
             {
-                trainService.getAllTrains();
+                Console.WriteLine(trainService.getAllTrains());
                 Console.WriteLine("Select train to delete car from: ");
                 ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
                 trainService.trainExists(train, true);
-                carService.getTrainCars(train);
+                Console.WriteLine(carService.getTrainCars(train));
                 Console.WriteLine("Select car to delete: ");
                 ushort car = Convert.ToUInt16(GetInputService.GetVerifiedInput(@"\d{2,4}"));
                 carService.carExists(train, car, true);
@@ -174,11 +186,11 @@ namespace PL
         {
             try
             {
-                trainService.getAllTrains();
+                Console.WriteLine(trainService.getAllTrains());
                 Console.WriteLine("Select train to delete booking from: ");
                 ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
                 trainService.trainExists(train, true);
-                carService.getTrainCars(train);
+                Console.WriteLine(carService.getTrainCars(train));
                 Console.WriteLine("Select car to delete booking from: ");
                 ushort car = Convert.ToUInt16(GetInputService.GetVerifiedInput(@"\d{2,4}"));
                 carService.carExists(train, car, true);
@@ -188,7 +200,7 @@ namespace PL
                 bookingService.delete(train, car, sit);
 
             }
-            catch (Exception e) when (e is TrainNumberException || e is CarNumberException || e is CarNotEmptyException)
+            catch (Exception e) when (e is TrainNumberException || e is CarNumberException || e is BookingNumberException)
             {
                 Console.WriteLine(e.Message);
             }
@@ -202,12 +214,16 @@ namespace PL
                     viewAllTrains();
                     break;
                 case "single":
+                    viewSingleTrain(); 
                     break;
                 case "percentage":
+                    viewPercentage();
                     break;
                 case "vacancy":
+                    viewVacancy(); 
                     break;
                 case "booking":
+                    viewBooking(); 
                     break;
             }
         }
@@ -215,6 +231,111 @@ namespace PL
         public void viewAllTrains()
         {
             Console.WriteLine(trainService.getAllTrains());
+        }
+        public void viewSingleTrain()
+        {
+            try
+            {
+                Console.WriteLine(trainService.getAllTrains());
+                Console.WriteLine("Select train you want to view: ");
+                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
+                trainService.trainExists(train, true);
+                Console.WriteLine(trainService.getSingleTrain(train));
+            }
+            catch (InvalidInputException)
+            {
+                Console.WriteLine("Invalid data entered.");
+            }
+            catch (TrainNumberException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+        }
+        public void viewPercentage()
+        {
+            try
+            {
+                Console.WriteLine(trainService.getAllTrains());
+                Console.WriteLine("Select train you want to view: ");
+                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
+                trainService.trainExists(train, true);
+                Console.WriteLine(carService.getPercentage(train));
+            }
+            catch (InvalidInputException)
+            {
+                Console.WriteLine("Invalid data entered.");
+            }
+            catch (TrainNumberException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+          
+        }
+        public void viewVacancy()
+        {
+            try
+            {
+                Console.WriteLine(trainService.getAllTrains());
+                Console.WriteLine("Select train you want to view: ");
+                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
+                trainService.trainExists(train, true);
+                Console.WriteLine(carService.getTrainCars(train));
+                Console.WriteLine("Select car you want to view: ");
+                ushort car = Convert.ToUInt16(GetInputService.GetVerifiedInput(@"\d{2,4}"));
+                carService.carExists(train, car, true);
+                carService.getCarVacantSits(train, car);
+            }
+            catch (Exception e) when (e is TrainNumberException || e is CarNumberException || e is CarNotEmptyException)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        public void viewBooking()
+        {
+            try
+            {
+                Console.WriteLine(trainService.getAllTrains());
+                Console.WriteLine("Select train you want to view: ");
+                ulong train = Convert.ToUInt64(GetInputService.GetVerifiedInput(@"\d{6,20}"));
+                trainService.trainExists(train, true);
+                Console.WriteLine(carService.getTrainCars(train));
+                Console.WriteLine("Select car you want to view: ");
+                ushort car = Convert.ToUInt16(GetInputService.GetVerifiedInput(@"\d{2,4}"));
+                carService.carExists(train, car, true);
+                Console.WriteLine("Enter number of sit you want to view (1-30): ");
+                byte sit = Convert.ToByte(GetInputService.GetVerifiedInput(@"^(?(?=[0-2])\d?\d|30)/"));
+                Console.WriteLine(bookingService.getBooking(train, car, sit)); 
+            }
+            catch (Exception e) when (e is TrainNumberException || e is CarNumberException || e is BookingNumberException)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public void search(string entity)
+        {
+            if(entity.Equals("keyword"))
+            {
+                searchByKeyword(); 
+            }
+            else
+            {
+                searchByDate();
+            }
+        }
+
+        public void searchByKeyword()
+        {
+            Console.WriteLine("Enter keyword: ");
+            string keyword = GetInputService.GetVerifiedInput(@"[A-Za-z]{3,20}");
+            Console.WriteLine(trainService.searchByKeyword(keyword));
+        }
+        public void searchByDate()
+        {
+            Console.WriteLine("Enter search date (dd/MM/yyyy): ");
+            DateTime date = DateTime.ParseExact(GetInputService.GetVerifiedInput(@"\d\d?/\d\d?/\d{4}"), "d/M/yyyy", CultureInfo.InvariantCulture);
+            Console.WriteLine(bookingService.getBookingByDate(date)); 
         }
 
         public Dictionary<string, Dictionary<string, Action<string>>> GetMenuFunctions()
@@ -224,6 +345,7 @@ namespace PL
             menus.Add("add", GetAddFunctions());
             menus.Add("delete", GetDeleteFunctions());
             menus.Add("view", GetViewFunctions());
+            menus.Add("search", GetSearchFunctions());
             return menus;
         }
 
@@ -259,6 +381,16 @@ namespace PL
             functions.Add("all", delegate { view("all"); }); 
             functions.Add("single", delegate { view("single"); }); 
             functions.Add("percentage", delegate { view("percentage"); }); 
+            functions.Add("vacancy", delegate { view("vacancy"); }); 
+            functions.Add("booking", delegate { view("booking"); }); 
+            return functions;
+        }
+
+        public Dictionary<string, Action<string>> GetSearchFunctions()
+        {
+            Dictionary<string, Action<string>> functions = new Dictionary<string, Action<string>>();
+            functions.Add("keyword", delegate { search("keyword"); });
+            functions.Add("date", delegate { search("date"); });
             return functions;
         }
 

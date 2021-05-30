@@ -31,6 +31,24 @@ namespace BLL.CarService
             readWrite.WriteData(cars);
         }
 
+        public bool isCarEmpty(ulong train, ushort car)
+        {
+            List<Car> cars = readWrite.ReadData();
+            Car single = cars.Find(x => x.trainNumber == train);
+            foreach(bool taken in single.sitsTaken)
+            {
+                if (taken) return false;
+            }
+            return true;
+        }
+
+        public void carExists(ulong train, ushort car, bool shouldExist)
+        {
+            List<Car> cars = readWrite.ReadData();
+            Car single = cars.Find(x => x.trainNumber == train);
+            if (single == null && shouldExist == true) throw new CarNumberException();
+        }
+
         public void sitChangeState(ulong train, ushort car, int sit, bool isTaken)
         {
             List<Car> cars = readWrite.ReadData();
@@ -40,7 +58,6 @@ namespace BLL.CarService
             current.sitsTaken = sits;
             readWrite.WriteData(cars);
         }
-
 
         public String getCarVacantSits(ulong train, ushort car)
         {
@@ -59,6 +76,30 @@ namespace BLL.CarService
             }
 
             return builder.ToString();
+        }
+
+        public String getPercentage(ulong train)
+        {
+            StringBuilder builder = new StringBuilder();
+            List<Car> cars = readWrite.ReadData();
+            cars = cars.FindAll(x => x.trainNumber == train);
+            foreach (Car car in cars)
+            {
+                builder.Append(car.carNumber);
+                builder.Append(calculateTakenPercentage(car.sitsTaken));
+                builder.Append("%\n");
+            }
+            return builder.ToString();
+        }
+
+        private String calculateTakenPercentage(bool[] sits)
+        {
+            int taken = 0; 
+            foreach(bool isTaken in sits)
+            {
+                if (isTaken) taken++;
+            }
+            return " " + (taken * 100 / 30).ToString();
         }
 
         public String getTrainCars(ulong train)

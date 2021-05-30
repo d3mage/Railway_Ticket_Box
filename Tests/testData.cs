@@ -34,9 +34,12 @@ namespace Tests
             return toReturn;
         }
 
-        public static Train GetTrain()
+        public static List<Booking> GetBookingList()
         {
-            return new Train(129382, "Kyiv", "Mykolaiv", DateTime.Today);
+            Booking booking1 = new(2342934, 1030, 1);
+            Booking booking2 = new(2342934, 1030, 2);
+            List<Booking> toReturn = new() { booking1, booking2 };
+            return toReturn;
         }
 
         public static List<TrainDAL> GetTrainDALList()
@@ -60,6 +63,14 @@ namespace Tests
             Car car1 = new(1923901, 1200); 
             Car car2 = new(1923901, 1201);
             List<Car> toReturn = new() { car1, car2 };
+            return toReturn;
+        }
+
+        public static List<BookingDAL> GetBookingDALList()
+        {
+            BookingDAL booking1 = new(2342934, 1030, 1);
+            BookingDAL booking2 = new(2342934, 1030, 2);
+            List<BookingDAL> toReturn = new() { booking1, booking2 };
             return toReturn;
         }
     }

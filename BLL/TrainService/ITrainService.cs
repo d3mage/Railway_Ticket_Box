@@ -10,6 +10,9 @@ namespace BLL.TrainService
     {
         public void add(ulong train, string dispatch, string destination, DateTime departure);
         public void delete(ulong train);
+        public void trainExists(ulong train, bool shouldExist);
         public String getAllTrains();
+        public String getSingleTrain(ulong train);
+        public String searchByKeyword(string keyword);
     }
 }

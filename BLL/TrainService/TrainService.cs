@@ -27,6 +27,14 @@ namespace BLL.TrainService
         {
             List<Train> trains = readWrite.ReadData();
             trains.Remove(trains.Find(x => x.trainNumber == train));
+            readWrite.WriteData(trains);
+        }
+
+        public void trainExists(ulong train, bool shouldExist)
+        {
+            List<Train> trains = readWrite.ReadData();
+            Train single = trains.Find(x => x.trainNumber == train);
+            if (single == null && shouldExist == true) throw new TrainNumberException(); 
         }
 
         public String getAllTrains()
@@ -36,7 +44,8 @@ namespace BLL.TrainService
 
             foreach(Train train in trains)
             {
-                stringBuilder.Append(train.ToString()); 
+                stringBuilder.Append(train.ToString());
+                stringBuilder.Append("\n");
             }
 
             return stringBuilder.ToString();
@@ -52,12 +61,20 @@ namespace BLL.TrainService
             return stringBuilder.ToString(); 
         }
 
+        public String searchByKeyword(string keyword)
+        {
+            List<Train> trains = readWrite.ReadData();
+            trains = trains.FindAll(x => x.dispatch.Equals(keyword) || x.destination.Equals(keyword));
 
-        //public bool trainExists(ulong train)
-        //{
-        //    List<Train> trains = readWrite.ReadData();
-        //    Train single = trains.Find(x => x.trainNumber == train);
-        //    return single != null; 
-        //}
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (Train train in trains)
+            {
+                stringBuilder.Append(train.ToString());
+                stringBuilder.Append("\n");
+            }
+
+            return stringBuilder.ToString();
+        }
     }
 }

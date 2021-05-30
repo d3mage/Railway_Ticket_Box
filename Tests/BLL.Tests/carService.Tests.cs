@@ -157,7 +157,6 @@ namespace Tests.BLL.Tests
             string expected2 = "Sit 1 Vacant";
 
             string actual = service.getCarVacantSits(1039921, 12900);
-            //_testOutputHelper.WriteLine(actual);
             Assert.Contains(expected1, actual);
             Assert.Contains(expected2, actual);
         }
@@ -176,15 +175,26 @@ namespace Tests.BLL.Tests
             string expected2 = "1201"; 
 
             string actual = service.getTrainCars(1923901);
-            System.Console.WriteLine(actual);
             Assert.Contains(expected1, actual);
             Assert.Contains(expected2, actual);
         }
 
-        private readonly ITestOutputHelper _testOutputHelper;
-        public CarService_Tests(ITestOutputHelper testOutputHelper)
+        [Fact]
+        public void getPercentage_Success()
         {
-            _testOutputHelper = testOutputHelper;
+            List<Car> data = testData.GetCarListEqualTrain();
+
+            var mock = new Mock<IReadWriteService<Car, CarDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            CarService service = new(mock.Object);
+
+            string expected1 = "1200 0%";
+            string expected2 = "1201 0%";
+
+            string actual = service.getPercentage(1923901);
+            Assert.Contains(expected1, actual);
+            Assert.Contains(expected2, actual);
         }
     }
 }

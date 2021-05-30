@@ -88,10 +88,40 @@ namespace Tests.BLL.Tests
             string expected2 = "2021019";
 
             string actual = service.getAllTrains();
-            Console.WriteLine(actual);
             Assert.Contains(expected1, actual);
             Assert.Contains(expected2, actual);
         }
 
+        [Fact]
+        public void getSingleTrains_Success()
+        {
+            List<Train> data = testData.GetTrainList();
+
+            var mock = new Mock<IReadWriteService<Train, TrainDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            TrainService service = new(mock.Object);
+
+            string expected1 = "202019";
+
+            string actual = service.getSingleTrain(202019);
+            Assert.Contains(expected1, actual);
+        }
+
+        [Fact]
+        public void searchByKeyword_Success()
+        {
+            List<Train> data = testData.GetTrainList();
+
+            var mock = new Mock<IReadWriteService<Train, TrainDAL>>();
+            mock.Setup(x => x.ReadData()).Returns(data);
+
+            TrainService service = new(mock.Object);
+
+            string expected1 = "202019";
+
+            string actual = service.searchByKeyword("Odesa");
+            Assert.Contains(expected1, actual);
+        }
     }
 }
